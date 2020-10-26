@@ -7,7 +7,7 @@ import { TodosContextManager } from './TodosContextManager';
 const todoDetailRoutePath = '/detail/:id';
 
 type TodoDetailRouteParams = {
-  readonly id: string;
+  readonly id: Id;
 }
 
 export const TodosPage: React.FC = () => {
