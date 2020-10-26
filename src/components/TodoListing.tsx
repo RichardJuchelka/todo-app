@@ -4,11 +4,11 @@ import { TodoListItem } from './TodoListItem';
 import { TodosContext } from './TodosContextManager';
 
 export const TodoListing: React.FC = () => {
-  const todos = useContext(TodosContext);
+  const data = useContext(TodosContext);
 
   return (
     <List
-      data={todos || []}
+      data={data ?? []}
       renderItem={(todoItem) => <TodoListItem key={todoItem.id} todo={todoItem} />}
     />
   );

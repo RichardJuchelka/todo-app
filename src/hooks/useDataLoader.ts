@@ -1,32 +1,50 @@
+import { GraphQLResult } from '@aws-amplify/api-graphql';
+import {
+  API,
+  graphqlOperation,
+} from 'aws-amplify';
 import {
   useEffect,
   useState,
 } from 'react';
+import { assertPromise } from '../utils/assert';
 
-type FetchState<TData> = {
-  readonly data: TData | null;
-  readonly error: string | null;
+type Data<TQuery> = GraphQLResult<TQuery>['data'];
+type Errors<TQuery> = GraphQLResult<TQuery>['errors'];
+
+type LoaderState<TQuery> = {
+  readonly data: Data<TQuery>;
+  readonly errors: Errors<TQuery>;
   readonly isLoading: boolean;
 };
 
-/**
- * A hook for API agnostic Promise-based data loading.
- * @param fetcher Async function containing an implementation of data fetching. It is called whenever the reference changes.
- */
-export function useDataLoader<TData>(fetcher: () => Promise<TData>): [data: TData | null, error: string | null, isLoading: boolean] {
-  const [loaderState, setLoaderState] = useState<FetchState<TData>>({ data: null, error: null, isLoading: true });
+const initialLoaderState = { data: undefined, errors: undefined, isLoading: true };
+
+export function useDataLoader<TQuery, TParams = never>(query: string, params?: TParams): [data: Data<TQuery>, error: Errors<TQuery>, isLoading: boolean] {
+  const [loaderState, setLoaderState] = useState<LoaderState<TQuery>>(initialLoaderState);
 
   useEffect(() => {
     let isSubscribed = true;
 
-    fetcher()
-      .then(data => isSubscribed && setLoaderState({ data, error: null, isLoading: false }))
-      .catch(error => isSubscribed && setLoaderState({ data: null, error: error, isLoading: false }));
+    setLoaderState(initialLoaderState);
+
+    const fetcher = API.graphql(graphqlOperation(query));
+    assertPromise<GraphQLResult<TQuery>>(fetcher);
+
+    const handleResponse = ({ data, errors }: GraphQLResult<TQuery>): void => {
+      if (isSubscribed) {
+        setLoaderState({ data, errors, isLoading: false });
+      }
+    };
+
+    fetcher
+      .then(handleResponse)
+      .catch(handleResponse);
 
     return () => {
       isSubscribed = false;
     }
-  }, [fetcher]);
+  }, [query, params]);
 
-  return [loaderState.data, loaderState.error, loaderState.isLoading];
+  return [loaderState.data, loaderState.errors, loaderState.isLoading];
 }
