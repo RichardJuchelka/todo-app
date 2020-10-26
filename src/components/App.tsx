@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDataLoader } from './hooks/useDataLoader';
-import { todolist } from './queries/todoList';
+import { useDataLoader } from '../hooks/useDataLoader';
+import { todolist } from '../queries/todoList';
 import { TodoListItem } from './Todo';
 
 export const App: React.FC = () => {

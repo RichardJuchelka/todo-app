@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Todo } from './models/Todo';
+import { Todo } from '../models/Todo';
 
 type TodoListItemProps = {
   readonly todo: Todo;
