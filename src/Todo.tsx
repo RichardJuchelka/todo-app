@@ -1,27 +1,17 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Todo } from './models/Todo';
 
-class Todo extends React.Component<any> {
-  shouldComponentUpdate(prevProps: any) {
-    if(this.props != prevProps) {
-      return true;
-    }
-    return false;
-  }
-
-  handleOnClick() {
-    // window.location.href = '/detail'
-  }
-
-  render() {
-
-    return (
-      <div>
-        <div onClick={this.handleOnClick}>
-          {this.props.todo.title}
-        </div>
-      </div>
-    );
-  }
+type TodoListItemProps = {
+  readonly todo: Todo;
 }
 
-export default Todo;
+export const TodoListItem: React.FC<TodoListItemProps> = ({ todo }) => {
+  return (
+    <div>
+      <Link to={`/detail/${todo.id}`}>
+        {todo.title}
+      </Link>
+    </div>
+  );
+};
