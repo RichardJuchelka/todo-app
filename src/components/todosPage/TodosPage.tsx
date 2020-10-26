@@ -2,10 +2,12 @@ import React from 'react';
 import {
   Col,
   Container,
-  Navbar,
   Row,
 } from 'react-bootstrap';
-import { Route, RouteComponentProps } from 'react-router';
+import {
+  Route,
+  RouteComponentProps,
+} from 'react-router';
 import {
   TodoDetailRouteParams,
   todoDetailRoutePath,
