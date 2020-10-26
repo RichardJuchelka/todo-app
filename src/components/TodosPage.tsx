@@ -1,14 +1,12 @@
 import React from 'react';
 import { Route, RouteComponentProps } from 'react-router';
+import {
+  TodoDetailRouteParams,
+  todoDetailRoutePath,
+} from '../utils/routing';
 import { TodoDetail } from './TodoDetail';
 import { TodoListing } from './TodoListing';
 import { TodosContextManager } from './TodosContextManager';
-
-const todoDetailRoutePath = '/detail/:id';
-
-type TodoDetailRouteParams = {
-  readonly id: Id;
-}
 
 export const TodosPage: React.FC = () => {
   return (
