@@ -9,7 +9,7 @@ class Todo extends React.Component<any> {
   }
 
   handleOnClick() {
-    window.location.href = '/detail'
+    // window.location.href = '/detail'
   }
 
   render() {
