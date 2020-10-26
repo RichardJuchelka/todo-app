@@ -2,10 +2,10 @@ import React, {
   createContext,
   useMemo,
 } from 'react';
-import { ListTodosQuery } from '../API';
-import { listTodos } from '../graphql/queries';
-import { useDataLoader } from '../hooks/useDataLoader';
-import { Todo } from '../models/Todo';
+import { ListTodosQuery } from '../../API';
+import { listTodos } from '../../graphql/queries';
+import { useDataLoader } from '../../hooks/useDataLoader';
+import { Todo } from '../../models/Todo';
 
 export const TodosContext = createContext<ReadonlyArray<Todo> | null>(null);
 
